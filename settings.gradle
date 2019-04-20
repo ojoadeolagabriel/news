@@ -3,4 +3,5 @@ include 'nw-utils'
 include 'nw-client'
 include 'nw-api'
 include 'nw-processor'
+include 'nw-security'
 
