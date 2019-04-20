@@ -3,7 +3,6 @@ buildscript {
         springBootVersion = '2.1.4.RELEASE'
     }
     repositories {
-        mavenLocal()
         mavenCentral()
     }
     dependencies {
@@ -15,8 +14,19 @@ plugins {
     id 'java'
 }
 
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+bootJar {
+    baseName = ''
+    version = getCustomVersion()
+}
+
 group 'com.aloeda'
-version '1.0-SNAPSHOT'
+version getCustomVersion()
 
 repositories {
     mavenCentral()
@@ -32,6 +42,23 @@ dependencies {
 
     //spring dependencies
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.1.4.RELEASE'
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix')
 
+    //monitoring
+    compile group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.1.4'
+    compile group: 'io.micrometer', name: 'micrometer-core', version: '1.1.4'
+
+    //tests
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Finchley.SR2"
+    }
+}
+
+static Object getCustomVersion() {
+    return '1.1.' + new Date().getTime()
 }

@@ -1,2 +1,17 @@
 server:
   port: 5052
+
+#Metrics related configurations
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    web:
+      exposure:
+        include: '*'
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
