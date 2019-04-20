@@ -1,4 +1,4 @@
-package nw.client.common.domain;
+package nw.client.common.domain.news;
 
 import lombok.Data;
 

@@ -1,0 +1,4 @@
+server:
+  port: 5053
+  servlet:
+    context-path: '/bouncer'

@@ -37,13 +37,13 @@ dependencies {
     //project dependencies
     compile project(':nw-client')
 
-    //others
-    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
-
     //spring dependencies
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.1.4.RELEASE'
     compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix')
+
+    //others
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
 
     //monitoring
     compile group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.1.4'

@@ -1,0 +1,56 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.4.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+plugins {
+	id 'java'
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+bootJar {
+	baseName = ''
+	version = getCustomVersion()
+}
+
+group 'com.aloeda'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+dependencies {
+	//spring
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.4.RELEASE'
+	compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.5.RELEASE'
+
+	//monitoring
+	compile group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.1.4'
+	compile group: 'io.micrometer', name: 'micrometer-core', version: '1.1.4'
+
+	//code-gen
+	compile group: 'org.projectlombok', name: 'lombok', version: '1.18.6'
+
+	//testing
+	testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+static Object getCustomVersion() {
+	return '1.1.' + new Date().getTime()
+}

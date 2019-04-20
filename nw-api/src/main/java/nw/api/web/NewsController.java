@@ -1,9 +1,9 @@
 package nw.api.web;
 
 import nw.api.domain.NewsItemResource;
-import nw.client.common.Link;
-import nw.client.common.domain.NewItem;
-import nw.client.common.domain.NewsItemImage;
+import nw.client.common.domain.books.Link;
+import nw.client.common.domain.news.NewItem;
+import nw.client.common.domain.news.NewsItemImage;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,8 +1,8 @@
 package nw.api.domain;
 
 import lombok.Data;
-import nw.client.common.Link;
-import nw.client.common.domain.NewItem;
+import nw.client.common.domain.books.Link;
+import nw.client.common.domain.news.NewItem;
 
 @Data
 public class NewsItemResource {
