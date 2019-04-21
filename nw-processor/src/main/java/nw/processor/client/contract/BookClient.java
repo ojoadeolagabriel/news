@@ -1,10 +1,14 @@
 package nw.processor.client.contract;
 
-import nw.client.contracts.BookClientX;
+import nw.client.contracts.BookClientAPIContract;
+import nw.processor.config.BookClientConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 
-@FeignClient(value = "bookClient", name = "bookClient", url = "http://localhost:5051/api/v1/books", fallbackFactory = BookClientFallbackFactory.class)
-public interface BookClient extends BookClientX {
+@FeignClient(name = "bookClient",
+		url = "${bookClient.url}",
+		fallbackFactory = BookClientFallbackFactory.class,
+		configuration = BookClientConfig.class)
+public interface BookClient extends BookClientAPIContract {
 
 }
 

@@ -1,5 +1,6 @@
 package nw.bouncer.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,19 +20,20 @@ import org.springframework.security.oauth2.provider.request.DefaultOAuth2Request
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 @Order(1)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	@Autowired
-	private ClientDetailsService clientDetailsService;
+
+	private final ClientDetailsService clientDetailsService;
 
 	@Autowired
 	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
 		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		auth.inMemoryAuthentication()
-				.withUser("bill").password(encoder.encode("abc123")).roles("ADMIN").and()
-				.withUser("bob").password(encoder.encode("abc123")).roles("USER");
+				.withUser("bill").password(encoder.encode("abc123")).roles("TRUSTED_CLIENT").and()
+				.withUser("bob").password(encoder.encode("abc123")).roles("TRUSTED_CLIENT");
 	}
 
 	@Override
@@ -48,7 +50,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
-
 
 	@Bean
 	public TokenStore tokenStore() {

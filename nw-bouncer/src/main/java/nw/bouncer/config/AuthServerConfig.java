@@ -1,7 +1,6 @@
 package nw.bouncer.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,24 +19,19 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 @EnableAuthorizationServer
 public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
-	private static String REALM="MY_OAUTH_REALM";
+	private final TokenStore tokenStore;
 
-	@Autowired
-	private TokenStore tokenStore;
+	private final UserApprovalHandler userApprovalHandler;
 
-	@Autowired
-	private UserApprovalHandler userApprovalHandler;
-
-	@Autowired
 	@Qualifier("authenticationManagerBean")
-	private AuthenticationManager authenticationManager;
+	private final AuthenticationManager authenticationManager;
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		clients.inMemory()
 				.withClient("my-trusted-client")
-				.authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
+				.authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit", "client_credentials")
 				.authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
 				.scopes("read", "write", "trust")
 				.secret(encoder.encode("secret"))
@@ -46,13 +40,14 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 	}
 
 	@Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+	public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
 		endpoints.tokenStore(tokenStore).userApprovalHandler(userApprovalHandler)
 				.authenticationManager(authenticationManager);
 	}
 
 	@Override
-	public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-		oauthServer.realm(REALM+"/client");
+	public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
+		String REALM = "MY_OAUTH_REALM";
+		oauthServer.realm(REALM +"/client");
 	}
 }

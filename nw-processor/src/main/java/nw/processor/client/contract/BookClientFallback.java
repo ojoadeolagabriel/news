@@ -23,6 +23,7 @@ public class BookClientFallback implements BookClient {
 			out.println("possible connection issue: " + cause.getMessage());
 		} else {
 			out.println("issue detected calling while //findByIsbn: " + cause.getMessage());
+			cause.printStackTrace();
 		}
 		return new BookResource(null, null);
 	}

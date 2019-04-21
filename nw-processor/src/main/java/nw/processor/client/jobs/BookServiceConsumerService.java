@@ -17,7 +17,7 @@ public class BookServiceConsumerService {
 
 	BookClient bookClient;
 
-	@Scheduled(fixedDelay = 1000)
+	@Scheduled(fixedDelay = 2000)
 	void run() {
 		out.println(process());
 	}
